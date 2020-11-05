@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import TestPage from './page/TestPage';
 import TestPage2 from './page/TestPage2';
+import Login from './page/login';
 
 import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/core";
@@ -45,6 +46,7 @@ const classes = useStyles();
           <Switch>
             <Route path="/" exact component={TestPage} />
             <Route path="/page2" exact component={TestPage2} />
+            <Route path="/login" exact component={Login} />
           </Switch>
         </Router>
       </div>
