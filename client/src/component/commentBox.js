@@ -9,7 +9,7 @@ import EditIcon from '@material-ui/icons/Edit';
 
 // import moment from "moment";
 
-const PostBoxInput = () => {
+const CommentBoxInput = () => {
     return (
         <Paper
         square
@@ -38,31 +38,16 @@ const PostBoxInput = () => {
                 />
                 </div>
                 <div>
-                <MyButton> Post </MyButton>
+                <MyButton> Comment </MyButton>
                 </div>
             </div>
         </Paper>
     );
 };
 
-const PostBoxInAllPost = () => {
+const CommentBox = () => {
     return (
-        <div style = {{display: "flex",border: "2px solid #F68E5F", borderRadius: "10px", width:"1100px", justifyContent: "space-between", alignItems: "center"}}>
-            <div style = {{display: "flex", flexDirection:"column", padding: "32px"}}>
-                <div style = {{display: "flex", flexDirection:"column"}}>
-                    <div style = {{marginBottom:"4px"}}> somchai_jaidee </div>
-                    <div style = {{marginBottom:"16px", fontSize:"12px", color: "#BDBDBD"}}> 16/11/20 19:20 </div>
-                </div>
-                <div style = {{textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap", width:"1036px"}}> 
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.                </div>
-            </div>
-        </div>
-    );
-};
-
-const PostBox = () => {
-    return (
-        <div style = {{display: "flex",flexDirection: "column",border: "2px solid #F68E5F", borderRadius: "10px", width:"1100px"}}>
+        <div style = {{display: "flex",flexDirection: "column",border: "2px solid #F68E5F", borderRadius: "10px", width:"1000px"}}>
             <div style = {{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px", paddingTop: "32px", paddingLeft:"32px", paddingRight:"32px"}}>
                 <div style = {{display: "flex", flexDirection:"column"}}>
                     <div style = {{display: "flex", flexDirection:"column"}}>
@@ -79,7 +64,7 @@ const PostBox = () => {
                     </IconButton>
                 </div>
             </div>
-                <div style = {{width: "1036px", paddingLeft:"32px", paddingRight:"32px", paddingBottom: "32px"}}> 
+                <div style = {{width: "936px", paddingLeft:"32px", paddingRight:"32px", paddingBottom: "32px"}}> 
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.                
                 </div>
 
@@ -89,7 +74,6 @@ const PostBox = () => {
 
 
 export {
-    PostBoxInput,
-    PostBoxInAllPost,
-    PostBox,
+    CommentBoxInput,
+    CommentBox,
 };

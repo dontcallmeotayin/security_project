@@ -5,7 +5,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import NavBar from "../component/navbar";
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
-import {PostBoxInput, PostBox} from "../component/postBox";
+import {PostBoxInput, PostBoxInAllPost, PostBox} from "../component/postBox";
+import {CommentBoxInput, CommentBox} from "../component/commentBox";
 
 function App() {
   return (
@@ -24,7 +25,10 @@ function App() {
 
       
       <PostBoxInput />
+      <PostBoxInAllPost />
       <PostBox />
+      <CommentBox />
+      <CommentBoxInput />
 
 
       <TextField
