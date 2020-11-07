@@ -3,9 +3,9 @@ import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import { MyButton } from "../component/myButton";
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
+import {MyEditModal} from "../component/myEditModal";
+import { MyDeleteModal } from './myDeleteModal';
+
 
 // import moment from "moment";
 
@@ -56,13 +56,9 @@ const CommentBox = () => {
                         <div style = {{fontSize:"12px", color: "#BDBDBD"}}> 16/11/20 19:20 </div>
                     </div>
                 </div>
-                <div>
-                    <IconButton color="secondary" style = {{backgroundColor: "#F68E5F", marginRight: "16px"}}>
-                        <EditIcon />
-                    </IconButton>
-                    <IconButton color="secondary" style = {{backgroundColor: "#F68E5F"}}>
-                        <DeleteIcon />
-                    </IconButton>
+                <div style={{display: "flex", flexDirection: "row"}}>
+                    <MyEditModal />
+                    <MyDeleteModal />
                 </div>
             </div>
                 <div style = {{width: "936px", paddingLeft:"32px", paddingRight:"32px", paddingBottom: "32px"}}> 

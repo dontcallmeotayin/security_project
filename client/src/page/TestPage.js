@@ -1,5 +1,6 @@
 import React from 'react';
-import { MyButton, MyOutlinedButton, MyIconButton } from "../component/myButton";
+import { MyButton, MyOutlinedButton } from "../component/myButton";
+import { MyLink } from "../component/myLink";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import NavBar from "../component/navbar";
@@ -7,6 +8,8 @@ import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import {PostBoxInput, PostBoxInAllPost, PostBox} from "../component/postBox";
 import {CommentBoxInput, CommentBox} from "../component/commentBox";
+import {MyEditModal} from "../component/myEditModal";
+import {MyDeleteModal} from "../component/myDeleteModal";
 
 function App() {
   return (
@@ -51,10 +54,18 @@ function App() {
         />
 
       </div>
+
+
+      <MyLink
+        goto={"/home"}
+      > read more ... </MyLink>
+
+      <MyEditModal />
+
+      <MyDeleteModal />
+
     </div>
-
     
-
 
   );
 }

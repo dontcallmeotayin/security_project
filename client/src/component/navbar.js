@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NavBar = ({ }) => {
+const NavBar = ({ history }) => {
     const classes = useStyles();
 
   return (
@@ -41,7 +41,10 @@ const NavBar = ({ }) => {
       <Toolbar className={classes.toolBar} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
         <div style={{ marginRight: '24px', color:'white' }}> Hi, somchai_jaidee </div>
           <MyOutlinedButton
-          > Log out </MyOutlinedButton>
+            onClick={() => {
+              history.push("/login");
+            }}> 
+            Log out </MyOutlinedButton>
       </Toolbar>
     </AppBar>
 

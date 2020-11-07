@@ -1,3 +1,4 @@
+
 import { Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -22,7 +23,7 @@ const MyOutlinedButton = withStyles({
     root: {
       background: "linear-gradient( white 30%, white 90%)",
       borderRadius: 10,
-      border: "2px solid #F68E5F",
+      border: "1px solid #F68E5F",
       width: "120px",
       color: "#F68E5F",
       paddingRight: "24px",
