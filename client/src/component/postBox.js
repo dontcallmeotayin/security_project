@@ -21,7 +21,8 @@ const PostBoxInput = () => {
           backgroundColor: "#F5DD90",
           borderRadius: 10,
           width: '1100px',
-          height: '160px'
+          height: '160px',
+          marginBottom: '48px'
         }}
         >
             <div style = {{display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", padding: "32px"}}>
@@ -47,7 +48,7 @@ const PostBoxInput = () => {
 
 const PostBoxInAllPost = () => {
     return (
-        <div style = {{display: "flex",border: "2px solid #F68E5F", borderRadius: "10px", width:"1100px", justifyContent: "space-between", alignItems: "center"}}>
+        <div style = {{display: "flex",border: "2px solid #F68E5F", borderRadius: "10px", width:"1100px", justifyContent: "space-between", alignItems: "center", marginBottom: '24px'}}>
             <div style = {{display: "flex", flexDirection:"column", padding: "32px"}}>
                 <div style = {{display: "flex", flexDirection:"column"}}>
                     <div style = {{marginBottom:"4px"}}> somchai_jaidee </div>
