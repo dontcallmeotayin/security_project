@@ -54,10 +54,10 @@ const MyEditModal = () => {
         onClose={handleClose}
       >
         <div style={modalStyle} className={classes.paper}>
-          <h2 id="simple-modal-title"> Edit post </h2>
+          <h2 id="simple-modal-title"> Edit </h2>
           <TextField
           id="outlined-multiline-static"
-          label="Multiline"
+          // label="Multiline"
           multiline
           fullWidth
           rows={8}

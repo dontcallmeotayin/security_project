@@ -45,9 +45,9 @@ const classes = useStyles();
       <div className={classes.app}>
         <Router>
           <Switch>
-            <Route path="/" exact component={TestPage} />
-            <Route path="/page2" exact component={TestPage2} />
-            <Route path="/login" exact component={Login} />
+            <Route path="/test" exact component={TestPage} />
+            <Route path="/test2" exact component={TestPage2} />
+            <Route path="/" exact component={Login} />
             <Route path="/home" exact component={Home} />
             <Route path="/blog" exact component={Blog} />
           </Switch>

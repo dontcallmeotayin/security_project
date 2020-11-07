@@ -30,7 +30,7 @@ const PostBoxInput = () => {
                 <div>
                 <TextField
                     id="standard-multiline-flexible"
-                    label="Multiline"
+                    label="New Post"
                     multiline
                     rowsMax={4}
                     inputProps={{style: {fontFamily: 'Prompt'}}} // font size of input text

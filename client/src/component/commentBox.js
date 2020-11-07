@@ -30,7 +30,7 @@ const CommentBoxInput = () => {
                 <div>
                 <TextField
                     id="standard-multiline-flexible"
-                    label="Multiline"
+                    label="Your Comment"
                     multiline
                     rowsMax={4}
                     inputProps={{style: {fontFamily: 'Prompt'}}} // font size of input text

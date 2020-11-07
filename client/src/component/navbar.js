@@ -42,7 +42,7 @@ const NavBar = ({ history }) => {
         <div style={{ marginRight: '24px', color:'white' }}> Hi, somchai_jaidee </div>
           <MyOutlinedButton
             onClick={() => {
-              history.push("/login");
+              history.push("/");
             }}> 
             Log out </MyOutlinedButton>
       </Toolbar>
