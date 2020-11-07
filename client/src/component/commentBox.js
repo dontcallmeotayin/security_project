@@ -21,7 +21,8 @@ const CommentBoxInput = () => {
           backgroundColor: "#F5DD90",
           borderRadius: 10,
           width: '1100px',
-          height: '160px'
+          height: '160px',
+          marginTop: '32px'
         }}
         >
             <div style = {{display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", padding: "32px"}}>
@@ -47,7 +48,7 @@ const CommentBoxInput = () => {
 
 const CommentBox = () => {
     return (
-        <div style = {{display: "flex",flexDirection: "column",border: "2px solid #F68E5F", borderRadius: "10px", width:"1000px"}}>
+        <div style = {{display: "flex",flexDirection: "column",border: "2px solid #F68E5F", borderRadius: "10px", width:"1000px", marginBottom:"8px", marginLeft:"100px"}}>
             <div style = {{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px", paddingTop: "32px", paddingLeft:"32px", paddingRight:"32px"}}>
                 <div style = {{display: "flex", flexDirection:"column"}}>
                     <div style = {{display: "flex", flexDirection:"column"}}>

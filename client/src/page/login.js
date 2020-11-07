@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { Button, TextField, Box, TextareaAutosize } from "@material-ui/core";
 // import Grid from "@material-ui/core/Grid";
 import { MyButton, MyOutlinedButton, MyIconButton } from "../component/myButton";
+import { Link } from "react-router-dom";
 
 class Login extends React.Component {
     state = { username: null, password: null, error: "" };
@@ -59,7 +60,14 @@ class Login extends React.Component {
                     inputProps={{style: {fontFamily: 'Prompt'}}} // font size of input text
                     InputLabelProps={{style: {fontFamily: 'Prompt'}}} // font size of input label
                 />
-                <MyButton> log in </MyButton>
+                <MyButton
+                    component={Link}
+                    to={{
+                        pathname: "/home",
+                        state: { user: this.state.name },
+                    }}
+                    onClick={(e) => this.onClickLogin()}
+                > log in </MyButton>
 
             </div>
         );
