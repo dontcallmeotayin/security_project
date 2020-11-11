@@ -1,5 +1,35 @@
 const User = require('../db/table/user')
 
+login = async (req,res) => {
+    const body = req.body
+    if (!body) {
+        return res.status(400).json({
+            success: false,
+            error: 'Please fill in username and password',
+        })
+    } 
+    const username = body.username
+    const password = body.password
+
+    const user = await User.find({username: username}, (err, user) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        if (!user.length) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Incorrect username` })
+        }
+    })
+    if (password == user[0].password) {
+        console.log("Login completed")
+        return res.status(201).json({success: true, user_id: user[0]._id,message: 'login completed'})
+    } else {
+        return res.status(404).json({ success: false, error: `Incorrect password` })
+    }
+    
+}
+
 createUser = (req, res) => {
     const body = req.body
     if (!body) {
@@ -111,6 +141,7 @@ getUsers = async (req, res) => {
 }
 
 module.exports = {
+    login,
     createUser,
     getUserById,
     getUsers

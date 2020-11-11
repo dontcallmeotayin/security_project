@@ -5,6 +5,7 @@ const CommentCtrl = require('../controllers/commentController')
 const TransactionCtrl = require('../controllers/transactionController')
 const router = express.Router()
 
+router.post('/login',UserCtrl.login)
 router.post('/user', UserCtrl.createUser)
 // router.put('/user/:id', UserCtrl.updateMovie)
 // router.delete('/user/:id', UserCtrl.deleteMovie)
