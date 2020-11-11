@@ -8,7 +8,7 @@ const cors = require('cors')
 
 const db = require('./db')
 
-const movieRouter = require('./routes/router')
+const Router = require('./routes/router')
 
 
 
@@ -38,7 +38,7 @@ app.get('/', (req, res) => {
 
 
 
-app.use('/api', movieRouter)
+app.use('/api', Router)
 
 
 

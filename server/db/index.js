@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const uri = "mongodb+srv://admin:WOf2W985Cpjh5Wsi@cluster0.kgj9c.mongodb.net/test";
 const apiport = process.env.PORT || 4000
 
-const User = require('./table/user.js')
+// const User = require('./table/user.js')
 
 mongoose
     .connect(uri, { useNewUrlParser: true })
