@@ -1,7 +1,7 @@
 const Blog = require('../db/table/blog')
 const Transaction = require('../db/table/transaction')
 
-createBlog = (res,req,next) => {
+createBlog = (req,res,next) => {
     const body = req.body
     if (!body) {
         return res.status(400).json({
@@ -12,7 +12,7 @@ createBlog = (res,req,next) => {
     const blog = new Blog(body)
     
     if (!blog) {
-        return res.status(400).json({ success: false, error: err })
+        return res.sendstatus(400).json({ success: false, error: err })
     }
 
     newtime = new Date()
