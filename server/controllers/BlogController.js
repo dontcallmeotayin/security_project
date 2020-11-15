@@ -22,7 +22,7 @@ createBlog = (res,req,next) => {
     blog
         .save()
         .then(() => {
-            var ts = new Transaction({type: 'blog',action:'create',blog_id:blog.blog_id,timestamp:newtime})
+            var ts = new Transaction({type: 'blog',action:'create',blog_id:blog._id,timestamp:newtime})
             ts.save()
             return res.status(201).json({
                 success: true,
@@ -49,7 +49,7 @@ updateBlog = async (req, res) => {
         })
     }
 
-    Blog.findOne({ blog_id: req.params.id }, (err, blog) => {
+    Blog.findOne({ _id: req.params.id }, (err, blog) => {
         if (err) {
             return res.status(404).json({
                 err,
@@ -64,7 +64,7 @@ updateBlog = async (req, res) => {
         blog
             .save()
             .then(() => {
-                var ts = new Transaction({type: 'blog',action:'edit',blog_id:blog.blog_id,timestamp:newtime})
+                var ts = new Transaction({type: 'blog',action:'edit',blog_id:blog._id,timestamp:newtime})
                 ts.save()        
                 return res.status(200).json({
                     success: true,
@@ -90,7 +90,7 @@ deleteBlog = async (req, res) => {
     //     })
     // }
 
-    Blog.findOne({ blog_id: req.params.id }, (err, blog) => {
+    Blog.findOne({ _id: req.params.id }, (err, blog) => {
         if (err) {
             return res.status(404).json({
                 err,
@@ -106,7 +106,7 @@ deleteBlog = async (req, res) => {
         blog
             .save()
             .then(() => {
-                var ts = new Transaction({type: 'blog',action:'delete',blog_id:blog.blog_id,timestamp:newtime})
+                var ts = new Transaction({type: 'blog',action:'delete',blog_id:blog._id,timestamp:newtime})
                 ts.save()        
                 return res.status(200).json({
                     success: true,
@@ -124,7 +124,7 @@ deleteBlog = async (req, res) => {
 }
 
 getBlogById = async (req, res) => {
-    await Blog.findOne({ blog_id: req.params.id }, (err, blog) => {
+    await Blog.findOne({ _id: req.params.id }, (err, blog) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
