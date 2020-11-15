@@ -7,7 +7,7 @@ const router = express.Router()
 
 
 router.post('/login',UserCtrl.login)
-router.post('/user',passport.authenticate('jwt', {session: false}), UserCtrl.createUser)
+router.post('/user', UserCtrl.createUser)
 // router.put('/user/:id', UserCtrl.updateMovie)
 // router.delete('/user/:id', UserCtrl.deleteMovie)
 router.get('/user/:id', UserCtrl.getUserById)
