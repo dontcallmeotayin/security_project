@@ -40,8 +40,8 @@ app.get('/', (req, res) => {
 })
 
 https.createServer({
-    key: fs.readFileSync('server.key'),
-    cert: fs.readFileSync('server.cert')
+    key: fs.readFileSync('../.cert/key.pem'),
+    cert: fs.readFileSync('../.cert/cert.pem')
   }, app)
   .listen(4000, function () {
     console.log('Example app listening on port 4000! Go to https://localhost:4000/')
