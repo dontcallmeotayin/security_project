@@ -1,7 +1,7 @@
 const Blog = require('../db/table/blog')
 const Transaction = require('../db/table/transaction')
 
-createBlog = (req, res) => {
+createBlog = (res,req,next) => {
     const body = req.body
     if (!body) {
         return res.status(400).json({
@@ -38,6 +38,7 @@ createBlog = (req, res) => {
             })
         })
 }
+
 
 updateBlog = async (req, res) => {
     const body = req.body

@@ -5,70 +5,42 @@ const jwt = require('jsonwebtoken')
 login = async (req,res,next) => {
     passport.authenticate('local', {session: false}, (err, user, info) => {
         if (err) return next(err)
-        if(user) {
-            console.log("login")
-            const token = jwt.sign({user}, 'your_jwt_secret',{expiresIn: 604800})
+        if (user) {
+            const token = jwt.sign({user}, 'your_jwt_secret',{expiresIn: '60m'})
             return res.json({user, token})
         } else {
             return res.status(422).json(info)
          }
-    })(req, res, next);
-    // const body = req.body
-    // if (!body) {
-    //     return res.status(400).json({
-    //         success: false,
-    //         error: 'Please fill in username and password',
-    //     })
-    // } 
-    // const username = body.username
-    // const password = body.password
-
-    // const user = await User.find({username: username}, (err, user) => {
-    //     if (err) {
-    //         return res.status(400).json({ success: false, error: err })
-    //     }
-    //     if (!user.length) {
-    //         return res
-    //             .status(404)
-    //             .json({ success: false, error: `Incorrect username` })
-    //     }
-    // })
-    // if (password == user[0].password) {
-    //     console.log("Login completed")
-    //     return res.status(201).json({success: true, user_id: user[0]._id,message: 'login completed'})
-    // } else {
-    //     return res.status(404).json({ success: false, error: `Incorrect password` })
-    // }
-    
+    })(req, res, next);   
 }
 
-createUser = (req, res) => {
+const createUser = (req, res) => {
     const body = req.body
-    if (!body) {
-        return res.status(400).json({
-            success: false,
-            error: 'You must provide a user',
-        })
-    }
-    const user = new User(body)
-    if (!user) {
-        return res.status(400).json({ success: false, error: err })
-    }
-    user
-        .save()
-        .then(() => {
-            return res.status(201).json({
-                success: true,
-                id: user._id,
-                message: 'User created!',
-            })
-        })
-        .catch(error => {
+        if (!body) {
             return res.status(400).json({
-                error,
-                message: 'User not created!',
+                success: false,
+                error: 'You must provide a user',
             })
-        })
+        }
+        const user = new User(body)
+        if (!user) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        user
+            .save()
+            .then(() => {
+                return res.status(201).json({
+                    success: true,
+                    id: user._id,
+                    message: 'User created!',
+                })
+            })
+            .catch(error => {
+                return res.status(400).json({
+                    error,
+                    message: 'User not created!',
+                })
+            })
 }
 
 // updateUser = async (req, res) => {

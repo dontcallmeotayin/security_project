@@ -3,7 +3,6 @@ const Schema = mongoose.Schema
 
 const Transaction = new Schema(
     {
-        transaction_id: Number,
         type: String,
         action: String,
         comment_id: Number,
