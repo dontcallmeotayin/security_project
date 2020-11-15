@@ -12,13 +12,21 @@ passport.use(new LocalStrategy({
     }, 
     (username, password, cb) => {        
      //this one is typically a DB call. Assume that the returned user object is pre-formatted and ready for storing in JWT  
-        
-     return UserModel.findOne({username, password})
+
+     return UserModel.findOne({username})
            .then(user => {
-               if (!user) {
-                   return cb(null, false, {message: 'Incorrect email or password.'})
+               if (user) {
+                    const isCorrect = bcrypt.compareSync(password, user.password)
+                    if(isCorrect){
+                        return cb(null, user, {message: 'Logged In Successfully'})
+                    }
+                    else{
+                        return cb(null, false, {message: 'Incorrect username or password.'})
+                    }
+               }
+               else{
+                   return cb(null, false, {message: 'Incorrect username or password.'})
                }               
-               return cb(null, user, {message: 'Logged In Successfully'})
           })
           .catch(err => cb(err))
     }

@@ -1,13 +1,16 @@
 const User = require('../db/table/user')
 const jwt = require('jsonwebtoken')
       passport = require('passport')
+      bcrypt = require('bcrypt')
+
 
 login = async (req,res,next) => {
     passport.authenticate('local', {session: false}, (err, user, info) => {
         if (err) return next(err)
-        if (user) {
+        if (user) {            
             const token = jwt.sign({user}, 'your_jwt_secret',{expiresIn: '60m'})
-            return res.json({user, token})
+            const {id,username,password,type}=user
+            return res.json({id,username,type,token})
         } else {
             return res.status(422).json(info)
          }
@@ -22,7 +25,13 @@ const createUser = (req, res) => {
                 error: 'You must provide a user',
             })
         }
-        const user = new User(body)
+        const {username,password,type} = body
+        const passwordHash = bcrypt.hashSync(password, 10)
+        const user = new User({
+            username,
+            password: passwordHash,
+            type
+          })
         if (!user) {
             return res.status(400).json({ success: false, error: err })
         }
