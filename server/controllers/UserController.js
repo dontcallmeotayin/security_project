@@ -9,8 +9,8 @@ login = async (req,res,next) => {
         if (err) return next(err)
         if (user) {            
             const token = jwt.sign({user}, 'your_jwt_secret',{expiresIn: '60m'})
-            const {id,username,password,type}=user
-            return res.json({id,username,type,token})
+            const {id,username}=user
+            return res.json({id,username,token})
         } else {
             return res.status(422).json(info)
          }
