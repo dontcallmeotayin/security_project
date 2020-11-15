@@ -22,7 +22,7 @@ createComment = (req, res) => {
     comment
         .save()
         .then(() => {
-            var ts = new Transaction({type: 'comment',action:'create',comment_id:comment.comment_id,timestamp:newtime})
+            var ts = new Transaction({type: 'comment',action:'create',comment_id:comment._id,timestamp:newtime})
             ts.save()
             return res.status(201).json({
                 success: true,
@@ -48,7 +48,7 @@ updateComment = async (req, res) => {
         })
     }
 
-    Comment.findOne({ comment_id: req.params.id }, (err, comment) => {
+    Comment.findOne({ _id: req.params.id }, (err, comment) => {
         if (err) {
             return res.status(404).json({
                 err,
@@ -63,7 +63,7 @@ updateComment = async (req, res) => {
         comment
             .save()
             .then(() => {
-                var ts = new Transaction({type: 'comment',action:'edit',comment_id:comment.comment_id,timestamp:newtime})
+                var ts = new Transaction({type: 'comment',action:'edit',comment_id:comment._id,timestamp:newtime})
                 ts.save()        
                 return res.status(200).json({
                     success: true,
@@ -89,7 +89,7 @@ deleteComment = async (req, res) => {
     //     })
     // }
 
-    Comment.findOne({ comment_id: req.params.id }, (err, comment) => {
+    Comment.findOne({ _id: req.params.id }, (err, comment) => {
         if (err) {
             return res.status(404).json({
                 err,
@@ -105,7 +105,7 @@ deleteComment = async (req, res) => {
         comment
             .save()
             .then(() => {
-                var ts = new Transaction({type: 'comment',action:'delete',comment_id:comment.comment_id,timestamp:newtime})
+                var ts = new Transaction({type: 'comment',action:'delete',comment_id:comment._id,timestamp:newtime})
                 ts.save()        
                 return res.status(200).json({
                     success: true,
@@ -139,7 +139,7 @@ deleteComment = async (req, res) => {
 // }
 
 getCommentById = async (req, res) => {
-    await Comment.findOne({ comment_id: req.params.id }, (err, comment) => {
+    await Comment.findOne({ _id: req.params.id }, (err, comment) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }

@@ -5,8 +5,8 @@ const Transaction = new Schema(
     {
         type: String,
         action: String,
-        comment_id: Number,
-        blog_id: Number,
+        comment_id: String,
+        blog_id: String,
         timestamp: Date
     }
 )
