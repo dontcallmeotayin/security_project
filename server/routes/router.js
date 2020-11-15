@@ -17,6 +17,7 @@ router.put('/blog/update/:id' , passport.authenticate('jwt', {session: false}), 
 router.put('/blog/delete/:id', BlogCtrl.deleteBlog)
 router.get('/blog/:id', passport.authenticate('jwt', {session: false}), BlogCtrl.getBlogById)
 router.get('/blogs', passport.authenticate('jwt', {session: false}), BlogCtrl.getBlogs)
+router.get('/blog/comments/:id', passport.authenticate('jwt', {session: false}), BlogCtrl.getBlogsAllComments)
 
 router.post('/comment', passport.authenticate('jwt', {session: false}), CommentCtrl.createComment)
 router.put('/comment/update/:id', passport.authenticate('jwt', {session: false}), CommentCtrl.updateComment)

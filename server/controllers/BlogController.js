@@ -1,4 +1,5 @@
 const Blog = require('../db/table/blog')
+const Comment = require ('../db/table/comment')
 const Transaction = require('../db/table/transaction')
 
 createBlog = (req,res,next) => {
@@ -151,10 +152,25 @@ getBlogs = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
+getBlogsAllComments = async (req,res) => {
+    await Comment.find({ blog_id: req.params.id }, (err, comments) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        if (!comments.length) {
+            return res
+                .status(200)
+                .json({ success: true, data: "no comments" })
+        }
+        return res.status(200).json({ success: true, data: comments })
+    }).catch(err => console.log(err))
+}
+
 module.exports = {
     createBlog,
     updateBlog,
     deleteBlog,
     getBlogById,
-    getBlogs
+    getBlogs,
+    getBlogsAllComments
 }
