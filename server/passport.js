@@ -1,3 +1,5 @@
+const { use } = require("passport");
+
 const passportJWT = require("passport-jwt"),
       JWTStrategy = passportJWT.Strategy,
       ExtractJWT  = passportJWT.ExtractJwt
@@ -12,9 +14,10 @@ passport.use(new LocalStrategy({
     }, 
     (username, password, cb) => {        
      //this one is typically a DB call. Assume that the returned user object is pre-formatted and ready for storing in JWT  
-
+     
      return UserModel.findOne({username})
            .then(user => {
+               console.log("user:",user)
                if (user) {
                     const isCorrect = bcrypt.compareSync(password, user.password)
                     if(isCorrect){

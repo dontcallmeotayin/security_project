@@ -9,13 +9,15 @@ import Blog from './page/blog'
 import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/core";
 
+import axios from "axios";
+import backend from "./ip";
+
 const theme = createMuiTheme({
     palette: {
       primary: {
         main: "#F68E5F", //orange
       },
       secondary: {
-        // main: "#F5DD90", // buff
         main: "#ffffff",
       },
     },
@@ -38,6 +40,19 @@ const useStyles = makeStyles({
   });
 
 const App = () => {
+// const [username, setUsername] = React.useState("");
+// const getUsername = async () => {
+//   const response = await axios.get(backend + "/api/user/"+ {}, {
+//       headers: {
+//       'Authorization': `Bearer ${token}`
+//       }
+// });
+//   const { success, data } = response.data;
+//   console.log(data.username)
+//   if (success) {
+//       setUsername(data.username)
+//   }
+// };
 
 const classes = useStyles();
   return (

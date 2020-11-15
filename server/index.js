@@ -39,16 +39,16 @@ app.get('/', (req, res) => {
 
 })
 
-https.createServer({
-    key: fs.readFileSync('server.key'),
-    cert: fs.readFileSync('server.cert')
-  }, app)
-  .listen(4000, function () {
-    console.log('Example app listening on port 4000! Go to https://localhost:4000/')
-  })
+// https.createServer({
+//     key: fs.readFileSync('server.key'),
+//     cert: fs.readFileSync('server.cert')
+//   }, app)
+//   .listen(4000, function () {
+//     console.log('Example app listening on port 4000! Go to https://localhost:4000/')
+//   })
 
 app.use('/api', Router)
 
 
 
-//app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
+app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))

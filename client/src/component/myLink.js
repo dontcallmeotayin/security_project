@@ -3,7 +3,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { Link } from "@material-ui/core/";
 
-const MyLink1 = ({ children, goto, history, style }) => {
+const MyLink1 = ({ children, goto, history, style, data }) => {
   return (<Link
     underline="always"
     color="primary"
@@ -11,7 +11,9 @@ const MyLink1 = ({ children, goto, history, style }) => {
         cursor:"pointer"
     }}
     onClick={() => {
-      history.push(goto);
+      history.push(goto, {
+        state: {Bid: data}
+      });
     }}
   >
     {children}

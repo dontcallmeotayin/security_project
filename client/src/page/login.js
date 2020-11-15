@@ -3,28 +3,31 @@ import { TextField} from "@material-ui/core";
 // import Grid from "@material-ui/core/Grid";
 import { MyButton } from "../component/myButton";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import backend from "../ip";
 
 class Login extends React.Component {
     state = { username: null, password: null, error: "" };
 
-    userLogin(value) {
-        this.setState({
-          name: value,
+    login = async() => {
+        const { username, password } = this.state;
+        const response = await axios.post(backend + "/api/login", {
+          username,
+          password,
         });
-        // socket.emit("login", this.state.name);
-        console.log(this.state.name);
-        // console.log(socket);
-    }
-    
-    onClickLogin() {
-        console.log(this.state.name);
-        if (!!this.state.name) {
-          this.userLogin(this.state.name);
+        if(response?.data?.id){
+          console.log(response)
+          this.props.history.push({
+            pathname: "/home", 
+            state: {data: response.data}
+          });
+        } else {
+          console.log("error")
+          this.setState({ error: "error" });
         }
-    }
+      };
 
     render() {
-        // const { username, password, error } = this.state;
         return (
             <div
                 style={{display: "flex", flexDirection: "column", 
@@ -48,6 +51,8 @@ class Login extends React.Component {
                     variant="outlined"
                     inputProps={{style: {fontFamily: 'Prompt'}}} // font size of input text
                     InputLabelProps={{style: {fontFamily: 'Prompt'}}} // font size of input label
+                    value={this.state.username}
+                    onChange={(e) => this.setState({ username: e.target.value })}
                 />
 
                 <TextField
@@ -59,14 +64,11 @@ class Login extends React.Component {
                     variant="outlined"
                     inputProps={{style: {fontFamily: 'Prompt'}}} // font size of input text
                     InputLabelProps={{style: {fontFamily: 'Prompt'}}} // font size of input label
+                    value={this.state.password}
+                    onChange={(e) => this.setState({ password: e.target.value })}
                 />
                 <MyButton
-                    component={Link}
-                    to={{
-                        pathname: "/home",
-                        state: { user: this.state.name },
-                    }}
-                    onClick={(e) => this.onClickLogin()}
+                    onClick={(e) => this.login()}
                 > log in </MyButton>
 
             </div>

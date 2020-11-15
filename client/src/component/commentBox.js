@@ -1,11 +1,13 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import { MyButton } from "../component/myButton";
 import {MyEditModal} from "../component/myEditModal";
 import { MyDeleteModal } from './myDeleteModal';
-
+import moment from "moment";
+import axios from "axios";
+import backend from "../ip";
 
 // import moment from "moment";
 
@@ -46,25 +48,54 @@ const CommentBoxInput = () => {
     );
 };
 
-const CommentBox = () => {
-    return (
-        <div style = {{display: "flex",flexDirection: "column",border: "2px solid #F68E5F", borderRadius: "10px", width:"1000px", marginBottom:"8px", marginLeft:"100px"}}>
-            <div style = {{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px", paddingTop: "32px", paddingLeft:"32px", paddingRight:"32px"}}>
-                <div style = {{display: "flex", flexDirection:"column"}}>
-                    <div style = {{display: "flex", flexDirection:"column"}}>
-                        <div style = {{marginBottom:"4px"}}> somchai_jaidee </div>
-                        <div style = {{fontSize:"12px", color: "#BDBDBD"}}> 16/11/20 19:20 </div>
-                    </div>
-                </div>
-                <div style={{display: "flex", flexDirection: "row"}}>
-                    <MyEditModal />
-                    <MyDeleteModal />
-                </div>
-            </div>
-                <div style = {{width: "936px", paddingLeft:"32px", paddingRight:"32px", paddingBottom: "32px"}}> 
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.                
-                </div>
+const CommentBox = ({history, data, token}) => {
+    const {
+        owner_id,
+        blog_id,
+        comment_id,
+        text, 
+        timestamp,
+        is_deleted
+    } = data;
 
+    const [username, setUsername] = React.useState("")
+
+    const getUsername = async () => {
+        const response = await axios.get(backend + "/api/user/" + owner_id, {
+            headers: {
+            'Authorization': `Bearer ${token}`
+            }
+    });
+        const { success, data } = response.data;
+        console.log(data.username)
+        if (success) {
+            setUsername(data.username)
+        }
+    };
+
+    useEffect(() => {
+        getUsername();
+    }, [])
+
+    return (
+        <div>
+            {!is_deleted && (
+                <div style = {{display: "flex",flexDirection: "column",border: "2px solid #F68E5F", borderRadius: "10px", width:"1000px", marginBottom:"8px", marginLeft:"100px"}}>
+                    <div style = {{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px", paddingTop: "32px", paddingLeft:"32px", paddingRight:"32px"}}>
+                        <div style = {{display: "flex", flexDirection:"column"}}>
+                            <div style = {{display: "flex", flexDirection:"column"}}>
+                                <div style = {{marginBottom:"4px"}}> {username} </div>
+                                <div style = {{fontSize:"12px", color: "#BDBDBD"}}> {moment(timestamp).format('lll')} </div>
+                            </div>
+                        </div>
+                        <div style={{display: "flex", flexDirection: "row"}}>
+                            <MyEditModal />
+                            <MyDeleteModal />
+                        </div>
+                    </div>
+                        <div style = {{width: "936px", paddingLeft:"32px", paddingRight:"32px", paddingBottom: "32px"}}> {text} </div>
+                </div>
+            )}
         </div>
     );
 };
