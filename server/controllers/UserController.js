@@ -1,32 +1,43 @@
 const User = require('../db/table/user')
+const jwt = require('jsonwebtoken')
+      passport = require('passport')
 
 login = async (req,res) => {
-    const body = req.body
-    if (!body) {
-        return res.status(400).json({
-            success: false,
-            error: 'Please fill in username and password',
-        })
-    } 
-    const username = body.username
-    const password = body.password
+    passport.authenticate('local', {session: false}, (err, user, info) => {
+        if (err) return next(err)
+        if(user) {
+            const token = jwt.sign(user, 'your_jwt_secret')
+            return res.json({user, token})
+        } else {
+            return res.status(422).json(info)
+         }
+    })(req, res, next);
+    // const body = req.body
+    // if (!body) {
+    //     return res.status(400).json({
+    //         success: false,
+    //         error: 'Please fill in username and password',
+    //     })
+    // } 
+    // const username = body.username
+    // const password = body.password
 
-    const user = await User.find({username: username}, (err, user) => {
-        if (err) {
-            return res.status(400).json({ success: false, error: err })
-        }
-        if (!user.length) {
-            return res
-                .status(404)
-                .json({ success: false, error: `Incorrect username` })
-        }
-    })
-    if (password == user[0].password) {
-        console.log("Login completed")
-        return res.status(201).json({success: true, user_id: user[0]._id,message: 'login completed'})
-    } else {
-        return res.status(404).json({ success: false, error: `Incorrect password` })
-    }
+    // const user = await User.find({username: username}, (err, user) => {
+    //     if (err) {
+    //         return res.status(400).json({ success: false, error: err })
+    //     }
+    //     if (!user.length) {
+    //         return res
+    //             .status(404)
+    //             .json({ success: false, error: `Incorrect username` })
+    //     }
+    // })
+    // if (password == user[0].password) {
+    //     console.log("Login completed")
+    //     return res.status(201).json({success: true, user_id: user[0]._id,message: 'login completed'})
+    // } else {
+    //     return res.status(404).json({ success: false, error: `Incorrect password` })
+    // }
     
 }
 

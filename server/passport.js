@@ -1,13 +1,17 @@
+const passportJWT = require("passport-jwt"),
+      JWTStrategy = passportJWT.Strategy,
+      ExtractJWT  = passportJWT.ExtractJwt
+
 const passport = require('passport')
         , LocalStrategy = require('passport-local').Strategy
 passport.use(new LocalStrategy({
-        usernameField: 'email',
+        usernameField: 'username',
         passwordField: 'password'
     }, 
-    (email, password, cb) => {        
+    (username, password, cb) => {        
      //this one is typically a DB call. Assume that the returned user object is pre-formatted and ready for storing in JWT  
         
-     return UserModel.findOne({email, password})
+     return UserModel.findOne({username, password})
            .then(user => {
                if (!user) {
                    return cb(null, false, {message: 'Incorrect email or password.'})
@@ -16,4 +20,21 @@ passport.use(new LocalStrategy({
           })
           .catch(err => cb(err))
     }
+));
+
+passport.use(new JWTStrategy({
+    jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+    secretOrKey   : 'your_jwt_secret'
+},
+(jwtPayload, cb) => {
+ //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
+    
+return UserModel.findOneById(jwtPayload.id)
+     .then(user => {
+         return cb(null, user);
+     })
+     .catch(err => {
+         return cb(err);
+     });
+}
 ));
