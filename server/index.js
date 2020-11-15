@@ -18,6 +18,8 @@ const apiPort = 4000
 
 
 
+require('./passport');
+
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(cors())
