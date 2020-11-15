@@ -1,6 +1,8 @@
 const passportJWT = require("passport-jwt"),
       JWTStrategy = passportJWT.Strategy,
       ExtractJWT  = passportJWT.ExtractJwt
+      UserModel = require('./db/table/user')
+
 
 const passport = require('passport')
         , LocalStrategy = require('passport-local').Strategy

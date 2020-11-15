@@ -2,11 +2,12 @@ const User = require('../db/table/user')
 const jwt = require('jsonwebtoken')
       passport = require('passport')
 
-login = async (req,res) => {
+login = async (req,res,next) => {
     passport.authenticate('local', {session: false}, (err, user, info) => {
         if (err) return next(err)
         if(user) {
-            const token = jwt.sign(user, 'your_jwt_secret')
+            console.log("login")
+            const token = jwt.sign({user}, 'your_jwt_secret',{expiresIn: 604800})
             return res.json({user, token})
         } else {
             return res.status(422).json(info)

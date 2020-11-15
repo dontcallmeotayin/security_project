@@ -5,12 +5,13 @@ const CommentCtrl = require('../controllers/commentController')
 const TransactionCtrl = require('../controllers/transactionController')
 const router = express.Router()
 
+
 router.post('/login',UserCtrl.login)
-router.post('/user', UserCtrl.createUser)
+router.post('/user',passport.authenticate('jwt', {session: false}), UserCtrl.createUser)
 // router.put('/user/:id', UserCtrl.updateMovie)
 // router.delete('/user/:id', UserCtrl.deleteMovie)
 router.get('/user/:id', UserCtrl.getUserById)
-router.get('/users', UserCtrl.getUsers)
+router.get('/users', passport.authenticate('jwt', {session: false}),UserCtrl.getUsers)
 
 router.post('/blog', BlogCtrl.createBlog)
 router.put('/blog/:id', BlogCtrl.updateBlog)
