@@ -10,6 +10,9 @@ import moment from "moment";
 import axios from "axios";
 import backend from "../ip";
 
+const user_name = sessionStorage.getItem("user_name");
+const token = sessionStorage.getItem("token");
+
 const PostBoxInput = () => {
     return (
         <Paper
@@ -27,7 +30,7 @@ const PostBoxInput = () => {
         }}
         >
             <div style = {{display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", padding: "32px"}}>
-                <div> somchai_jaidee </div>
+                <div> {user_name} </div>
                 <div>
                 <TextField
                     id="standard-multiline-flexible"
@@ -47,13 +50,14 @@ const PostBoxInput = () => {
     );
 };
 
-const PostBoxInAllPost = ({history, data, token}) => {
+const PostBoxInAllPost = ({history, data}) => {
     const {
         owner_id,
         blog_id,
         content, 
         timestamp,
-        is_deleted
+        is_deleted,
+        fetchData
     } = data;
     const [username, setUsername] = React.useState("")
 

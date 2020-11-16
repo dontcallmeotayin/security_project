@@ -35,15 +35,23 @@ const useStyles = makeStyles((theme) => ({
 
 const NavBar = ({ history }) => {
     const classes = useStyles();
+    const user_name = sessionStorage.getItem("user_name");
+    console.log("aaa", user_name)
+
+    const handle_logout = () =>{
+        sessionStorage.removeItem("id");
+        sessionStorage.removeItem("user_name");
+        sessionStorage.removeItem("token");
+        history.push("/");
+        history.go(0);
+    }
 
   return (
     <AppBar position="fixed" className={classes.appBar}>
       <Toolbar className={classes.toolBar} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
-        <div style={{ marginRight: '24px', color:'white' }}> Hi, somchai_jaidee </div>
+        <div style={{ marginRight: '24px', color:'white' }}> Hi, {user_name} </div>
           <MyOutlinedButton
-            onClick={() => {
-              history.push("/");
-            }}> 
+            onClick={handle_logout}> 
             Log out </MyOutlinedButton>
       </Toolbar>
     </AppBar>

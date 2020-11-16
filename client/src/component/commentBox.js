@@ -9,7 +9,9 @@ import moment from "moment";
 import axios from "axios";
 import backend from "../ip";
 
-// import moment from "moment";
+const token = sessionStorage.getItem("token");
+const user_name = sessionStorage.getItem("user_name");
+
 
 const CommentBoxInput = () => {
     return (
@@ -28,7 +30,7 @@ const CommentBoxInput = () => {
         }}
         >
             <div style = {{display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", padding: "32px"}}>
-                <div> somchai_jaidee </div>
+                <div> {user_name} </div>
                 <div>
                 <TextField
                     id="standard-multiline-flexible"
