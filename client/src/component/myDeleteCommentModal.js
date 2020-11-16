@@ -4,7 +4,6 @@ import Modal from "@material-ui/core/Modal";
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { MyButton, MyOutlinedButton } from "./myButton";
-import {useHistory } from "react-router-dom";
 import axios from "axios";
 import backend from "../ip";
 
@@ -31,17 +30,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const MyDeleteModal = (data) => {
+const MyDeleteCommentModal = (data) => {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
 
   const token = sessionStorage.getItem("token");
-  const blog_id = data.data;
-  console.log(data.data);
-  const history = useHistory();
-
+  const comment_id = data.data;
 
   const handleOpen = () => {
     setOpen(true);
@@ -52,18 +48,19 @@ const MyDeleteModal = (data) => {
   };
 
   const handleDelete = () => {
-    axios.put(backend + "/api/blog/delete/" + blog_id, {
+    console.log("prepare to delete ...");
+    axios.put(backend + "/api/comment/delete/" + comment_id, {
       headers: {
       'Authorization': `Bearer ${token}`
       }
     })
-    history.push('/home');
     window.location.reload(false);
-    console.log("deleted")
+    console.log("deleted");
   }
 
   return (
     <div>
+        {/* {console.log(comment_id)} */}
       <IconButton color="secondary" style = {{backgroundColor: "#F68E5F"}} onClick={handleOpen}>
           <DeleteIcon />
         </IconButton>
@@ -88,4 +85,4 @@ const MyDeleteModal = (data) => {
     </div>
   );
 }
-export  {MyDeleteModal}
+export  {MyDeleteCommentModal}

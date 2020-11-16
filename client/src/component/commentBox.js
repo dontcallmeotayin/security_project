@@ -4,27 +4,19 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import { MyButton } from "../component/myButton";
 import {MyEditModal} from "../component/myEditModal";
-import { MyDeleteModal } from './myDeleteModal';
+import { MyDeleteCommentModal } from './myDeleteCommentModal';
 import moment from "moment";
 import axios from "axios";
 import backend from "../ip";
-
-const api = axios.create(
-    {
-      withCredentials: true,
-    }
-  );
 
 const token = sessionStorage.getItem("token");
 const id = sessionStorage.getItem("id");
 const user_name = sessionStorage.getItem("user_name");
 
-
-const CommentBoxInput = () => {
+const CommentBoxInput = (info) => {
     const [content, setContent] = useState("")
     const handleAddComment = () => {
-        const data = {comment: content, owner_id: id}
-        console.log(data)
+        const data = {comment: content, owner_id: id, blog_id: info.data._id}
         axios
             .post(backend + "/api/comment", {
               data
@@ -54,7 +46,7 @@ const CommentBoxInput = () => {
         }}
         >
             <div style = {{display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", padding: "32px"}}>
-                <div> somchai_jaidee </div>
+                <div> {user_name} </div>
                 <div>
                 <TextField
                     id="standard-multiline-flexible"
@@ -78,17 +70,19 @@ const CommentBoxInput = () => {
     );
 };
 
-const CommentBox = ({history, data, token}) => {
-    const {
-        owner_id,
-        blog_id,
-        comment_id,
-        text, 
-        timestamp,
-        is_deleted
-    } = data;
-
+const CommentBox = (data) => {
+    // const {
+    //     owner_id,
+    //     blog_id,
+    //     // comment_id,
+    //     text, 
+    //     timestamp,
+    //     is_deleted
+    // } = data;
+    console.log("comment", data)
     const [username, setUsername] = React.useState("")
+    const owner_id = data.owner_id
+    const is_deleted = data.is_deleted
 
     const getUsername = async () => {
         const response = await axios.get(backend + "/api/user/" + owner_id, {
@@ -97,7 +91,6 @@ const CommentBox = ({history, data, token}) => {
             }
     });
         const { success, data } = response.data;
-        console.log(data.username)
         if (success) {
             setUsername(data.username)
         }
@@ -115,15 +108,16 @@ const CommentBox = ({history, data, token}) => {
                         <div style = {{display: "flex", flexDirection:"column"}}>
                             <div style = {{display: "flex", flexDirection:"column"}}>
                                 <div style = {{marginBottom:"4px"}}> {username} </div>
-                                <div style = {{fontSize:"12px", color: "#BDBDBD"}}> {moment(timestamp).format('lll')} </div>
+                                <div style = {{fontSize:"12px", color: "#BDBDBD"}}> {moment(data.timestamp).format('lll')} </div>
                             </div>
                         </div>
                         <div style={{display: "flex", flexDirection: "row"}}>
                             <MyEditModal />
-                            <MyDeleteModal />
+                            <MyDeleteCommentModal
+                            data ={data._id} />
                         </div>
                     </div>
-                        <div style = {{width: "936px", paddingLeft:"32px", paddingRight:"32px", paddingBottom: "32px"}}> {text} </div>
+                        <div style = {{width: "936px", paddingLeft:"32px", paddingRight:"32px", paddingBottom: "32px"}}> {data.comment} </div>
                 </div>
             )}
         </div>

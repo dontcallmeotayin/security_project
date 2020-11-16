@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import IconButton from '@material-ui/core/IconButton';
@@ -6,6 +6,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import TextField from '@material-ui/core/TextField';
 import { MyButton, MyOutlinedButton } from "./myButton";
 
+import axios from "axios";
+import backend from "../ip";
 
 function getModalStyle() {
   const top = 0;
@@ -30,11 +32,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const MyEditModal = () => {
+const MyEditModal = (data) => {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
+
+  const token = sessionStorage.getItem("token");
+  const id = sessionStorage.getItem("id");
+  const blog_id = data._id.data;
+  console.log(blog_id);
+  // const history = useHistory();
+  const [content, setContent] = useState('');
 
   const handleOpen = () => {
     setOpen(true);
@@ -43,6 +52,20 @@ const MyEditModal = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleUpdate = () => {
+    const data = {content: content, owner_id: id}
+    axios.put(backend + "/api/blog/update/" + blog_id, {
+      data,
+    },
+    {
+      headers: {
+      'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(window.location.reload(false));
+    console.log("updated")
+  }
 
   return (
     <div>
@@ -61,14 +84,16 @@ const MyEditModal = () => {
           multiline
           fullWidth
           rows={8}
-          defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+          defaultValue={data.data.content}
+          value = {content}
           variant="outlined"
           inputProps={{style: {fontFamily: 'Prompt'}}} // font size of input text
           InputLabelProps={{style: {fontFamily: 'Prompt'}}} // font size of input label
+          onChange={e => setContent(e.target.value)}
         />
           <div style = {{display:"flex", justifyContent:"center", alignItems:"center", marginTop: "32px"}}>
-              <MyOutlinedButton style = {{marginRight: "64px"}}> Cancel </MyOutlinedButton>
-              <MyButton> OK </MyButton>
+              <MyOutlinedButton style = {{marginRight: "64px"}} onClick={handleClose}> Cancel </MyOutlinedButton>
+              <MyButton onClick={handleUpdate}> OK </MyButton>
           </div>
         </div>
       </Modal>
