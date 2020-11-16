@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../component/navbar";
 import { PostBoxInput, PostBoxInAllPost } from "../component/postBox";
+import { withRouter } from "react-router-dom";
 import axios from "axios";
 import backend from "../ip";
 
@@ -18,7 +19,6 @@ const Home = () => {
       if (response.data) {
         // console.log(response.data['data'])
         setBlogData(response.data['data']);
-        console.log("aaa:", blogData)
       }
     } catch (e) {
       console.log(e);
@@ -35,8 +35,7 @@ const Home = () => {
       <div style={{ marginTop: "144px" }} />
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
         <PostBoxInput />
-        {console.log("aaa", blogData)}
-        {blogData.map((item, i) =>
+        {blogData.reverse().map((item, i) =>
           <PostBoxInAllPost
             key={i}
             data={item}

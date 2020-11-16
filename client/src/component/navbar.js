@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
 const NavBar = ({ history }) => {
     const classes = useStyles();
     const user_name = sessionStorage.getItem("user_name");
-    console.log("aaa", user_name)
 
     const handle_logout = () =>{
         sessionStorage.removeItem("id");
