@@ -10,10 +10,27 @@ import moment from "moment";
 import axios from "axios";
 import backend from "../ip";
 
-const user_name = sessionStorage.getItem("user_name");
 const token = sessionStorage.getItem("token");
+const id = sessionStorage.getItem("id");
+const user_name = sessionStorage.getItem("user_name");
 
 const PostBoxInput = () => {
+    const [content, setContent] = useState("")
+    const handleAddPost = () => {
+        const data = {content: content, owner_id: id}
+        console.log(data)
+        axios
+            .post(backend + "/api/blog", {
+              data,  
+            },
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                  }
+            })
+            .then(window.location.reload(false));
+            console.log("new post ja!")
+      };
     return (
         <Paper
         square
@@ -39,11 +56,15 @@ const PostBoxInput = () => {
                     rowsMax={4}
                     inputProps={{style: {fontFamily: 'Prompt'}}} // font size of input text
                     InputLabelProps={{style: {fontFamily: 'Prompt'}}} // font size of input label
+                    value = {content}
+                    onChange={(e) => {
+                        setContent(e.target.value);
+                      }}
                     style={{width:"600px"}}
                 />
                 </div>
                 <div>
-                <MyButton> Post </MyButton>
+                <MyButton onClick={handleAddPost}> Post </MyButton>
                 </div>
             </div>
         </Paper>

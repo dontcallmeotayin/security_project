@@ -9,11 +9,35 @@ import moment from "moment";
 import axios from "axios";
 import backend from "../ip";
 
+const api = axios.create(
+    {
+      withCredentials: true,
+    }
+  );
+
 const token = sessionStorage.getItem("token");
+const id = sessionStorage.getItem("id");
 const user_name = sessionStorage.getItem("user_name");
 
 
 const CommentBoxInput = () => {
+    const [content, setContent] = useState("")
+    const handleAddComment = () => {
+        const data = {comment: content, owner_id: id}
+        console.log(data)
+        axios
+            .post(backend + "/api/comment", {
+              data
+            },
+            {
+              headers: {
+                'Authorization': `Bearer ${token}`,
+              }
+            })
+            .then(window.location.reload(false));
+            console.log("new comment ja!")
+      };
+    
     return (
         <Paper
         square
@@ -30,7 +54,7 @@ const CommentBoxInput = () => {
         }}
         >
             <div style = {{display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", padding: "32px"}}>
-                <div> {user_name} </div>
+                <div> somchai_jaidee </div>
                 <div>
                 <TextField
                     id="standard-multiline-flexible"
@@ -39,11 +63,15 @@ const CommentBoxInput = () => {
                     rowsMax={4}
                     inputProps={{style: {fontFamily: 'Prompt'}}} // font size of input text
                     InputLabelProps={{style: {fontFamily: 'Prompt'}}} // font size of input label
+                    value = {content}
+                    onChange={(e) => {
+                        setContent(e.target.value);
+                      }}
                     style={{width:"600px"}}
                 />
                 </div>
                 <div>
-                <MyButton> Comment </MyButton>
+                <MyButton onClick={handleAddComment}> Comment </MyButton>
                 </div>
             </div>
         </Paper>
