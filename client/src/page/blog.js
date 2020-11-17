@@ -135,11 +135,11 @@ const Blog = (blog1) => {
                   <div style={{ marginBottom: "4px" }}> {username} </div>
                   <div style={{ fontSize: "12px", color: "#BDBDBD" }}>
                     {" "}
-                    {moment(myBlog._idtimestamp).format("lll")}{" "}
+                    {moment(myBlog.timestamp).format("lll")}{" "}
                   </div>
                 </div>
               </div>
-              {(type === "moderator" || myBlog.owner_id == id) && (
+              {(type === "moderator" || blogData.owner_id == id) && (
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <MyEditModal data={myBlog} />
                   <MyDeleteModal data={myBlog._id} />
@@ -218,11 +218,11 @@ const Blog = (blog1) => {
                   <div style={{ marginBottom: "4px" }}> {username} </div>
                   <div style={{ fontSize: "12px", color: "#BDBDBD" }}>
                     {" "}
-                    {moment(myBlog._idtimestamp).format("lll")}{" "}
+                    {moment(myBlog.timestamp).format("lll")}{" "}
                   </div>
                 </div>
               </div>
-              {(type === "moderator" || myBlog.owner_id == id) && (
+              {(type === "moderator" || blogData.owner_id == id) && (
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <MyEditModal data={myBlog} />
                   <MyDeleteModal data={myBlog._id} />
