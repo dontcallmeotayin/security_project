@@ -21,6 +21,10 @@ var fs = require('fs')
 
 require('./passport');
 
+var helmet = require('helmet')
+app.use(helmet())
+
+
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(cors())
