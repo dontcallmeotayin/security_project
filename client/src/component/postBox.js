@@ -131,7 +131,7 @@ const PostBoxInAllPost = ({history, data}) => {
 
 const PostBox = (data) => {
     const [username, setUsername] = React.useState("")
-    const owner_id = data.data.owner_id
+    const owner_id = data.owner_id
     const getUsername = async () => {
         const response = await axios.get(backend + "/api/user/" + owner_id, {
             headers: {
