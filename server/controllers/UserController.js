@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
       bcrypt = require('bcrypt')
 
 login = async (req,res,next) => {
-    await passport.authenticate('local', {session: false}, (err, user, info) => {
+    passport.authenticate('local', {session: false}, (err, user, info) => {
         if (err) return next(err)
         if (user) {            
             const token = jwt.sign({user}, 'your_jwt_secret',{expiresIn: '60m'})
