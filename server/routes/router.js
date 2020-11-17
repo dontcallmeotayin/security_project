@@ -14,14 +14,14 @@ router.get('/users', passport.authenticate('jwt', {session: false}),UserCtrl.get
 
 router.post('/blog', passport.authenticate('jwt', {session: false}), BlogCtrl.createBlog)
 router.put('/blog/update/:id' , passport.authenticate('jwt', {session: false}), BlogCtrl.updateBlog)
-router.patch('/blog/delete/:id', passport.authenticate('jwt', {session: false}), BlogCtrl.deleteBlog)
+router.delete('/blog/delete/:id', passport.authenticate('jwt', {session: false}), BlogCtrl.deleteBlog)
 router.get('/blog/:id', passport.authenticate('jwt', {session: false}), BlogCtrl.getBlogById)
 router.get('/blogs', passport.authenticate('jwt', {session: false}), BlogCtrl.getBlogs)
 router.get('/blog/comments/:id', passport.authenticate('jwt', {session: false}), BlogCtrl.getBlogsAllComments)
 
 router.post('/comment', passport.authenticate('jwt', {session: false}), CommentCtrl.createComment)
 router.put('/comment/update/:id', passport.authenticate('jwt', {session: false}), CommentCtrl.updateComment)
-router.patch('/comment/delete/:id', passport.authenticate('jwt', {session: false}), CommentCtrl.deleteComment)
+router.delete('/comment/delete/:id', passport.authenticate('jwt', {session: false}), CommentCtrl.deleteComment)
 router.get('/comment/:id', passport.authenticate('jwt', {session: false}), CommentCtrl.getCommentById)
 router.get('/comments', passport.authenticate('jwt', {session: false}), CommentCtrl.getComments)
 

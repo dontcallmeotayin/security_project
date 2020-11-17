@@ -64,8 +64,7 @@ const MyEditModal = (data) => {
       'Authorization': `Bearer ${token}`
       }
     })
-    history.push("/home");
-    window.location.reload()
+    // history.push("/home");
     console.log("updated")
   }
 

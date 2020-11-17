@@ -27,7 +27,7 @@ const CommentBoxInput = (info) => {
                 'Authorization': `Bearer ${token}`,
               }
             })
-            .then(window.location.reload(false));
+            // .then(window.location.reload(false));
             console.log("new comment ja!")
       };
     
@@ -86,6 +86,7 @@ const CommentBox = (data) => {
     const is_deleted = data.data.is_deleted
 
     const getUsername = async () => {
+        console.log(owner_id)
         const response = await axios.get(backend + "/api/user/" + owner_id, {
             headers: {
             'Authorization': `Bearer ${token}`

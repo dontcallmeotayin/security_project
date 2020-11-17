@@ -53,17 +53,13 @@ const MyDeleteCommentModal = (data) => {
 
   const handleDelete = () => {
     console.log("prepare to delete ...");
-    console.log(comment_id)
-    console.log("tk_delete",token)
-    const tk = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjVmYjBlOTgyMWMxMmZkMTNhNWE0NWNlMyIsInVzZXJuYW1lIjoidXNlcm5hbWUyIiwicGFzc3dvcmQiOiIkMmIkMTAkU3NHUGpqODZyZTIuVjQzaTB5NnBLdTRINWV2U1dwbnhjamlsWFFhc21GQ1R4UTNUeDQ2N2EiLCJ0eXBlIjoidXNlciIsIl9fdiI6MH0sImlhdCI6MTYwNTU4MTUyMywiZXhwIjoxNjA1NTg1MTIzfQ.W47lRMlLZGs_NFf4jwrhMgo9M1Inkip-eFzx497sUtw';
-    axios.patch(backend + "/api/comment/delete/" + comment_id, {
+    axios.delete(backend + "/api/comment/delete/" + comment_id, {
       headers: {
       'Authorization': `Bearer ${token}`
       }
     })
-    // .then(window.location.reload(false));
-    .then(console.log("deleted", token));
-    // console.log("deleted");
+    .then(window.location.reload(false));
+    console.log("deleted");
   }
 
   return (
