@@ -37,9 +37,6 @@ const MyDeleteCommentModal = (data) => {
   const [open, setOpen] = React.useState(false);
   const [token, setToken] = React.useState('');
   const user_token = sessionStorage.getItem("token");
-  console.log("comment_modal_data", data)
-  console.log("token", token)
-  console.log("user_token", user_token)
   const comment_id = data.data;
 
   const handleOpen = () => {

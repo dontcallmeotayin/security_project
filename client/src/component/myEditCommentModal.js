@@ -40,8 +40,6 @@ const MyEditCommentModal = (data) => {
 
   const token = sessionStorage.getItem("token");
   const id = sessionStorage.getItem("id");
-  console.log("edit comment:", data.data)
-  console.log("edit comment id:", data.data._id)
   const [content, setContent] = useState('');
   const comment_id = data.data._id;
   const handleOpen = () => {

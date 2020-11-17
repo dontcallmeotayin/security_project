@@ -15,8 +15,6 @@ const id = sessionStorage.getItem("id");
 const user_name = sessionStorage.getItem("user_name");
 const type = sessionStorage.getItem("type");
 
-console.log("pampam", type)
-
 const PostBoxInput = () => {
     const [content, setContent] = useState("");
     const handleAddPost = () => {
@@ -134,7 +132,6 @@ const PostBoxInAllPost = ({history, data}) => {
 const PostBox = (data) => {
     const [username, setUsername] = React.useState("")
     const owner_id = data.data.owner_id
-    {console.log("id",data.data._id)}
     const getUsername = async () => {
         const response = await axios.get(backend + "/api/user/" + owner_id, {
             headers: {

@@ -55,7 +55,6 @@ const MyEditModal = (data) => {
 
   const handleUpdate = () => {
     const data = {content: content, owner_id: id}
-    console.log("edit data", data);
     axios.put(backend + "/api/blog/update/" + blog_id, {
       data,
     },

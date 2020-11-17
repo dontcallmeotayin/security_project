@@ -39,7 +39,6 @@ const MyDeleteModal = (data) => {
 
   const token = sessionStorage.getItem("token");
   const blog_id = data.data;
-  console.log(data.data);
   const history = useHistory();
 
 

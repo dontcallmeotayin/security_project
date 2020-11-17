@@ -27,7 +27,7 @@ const CommentBoxInput = (info) => {
                 'Authorization': `Bearer ${token}`,
               }
             })
-            // .then(window.location.reload(false));
+            .then(window.location.reload(false));
             console.log("new comment ja!")
       };
     
@@ -72,21 +72,11 @@ const CommentBoxInput = (info) => {
 };
 
 const CommentBox = (data) => {
-    // const {
-    //     owner_id,
-    //     blog_id,
-    //     // comment_id,
-    //     text, 
-    //     timestamp,
-    //     is_deleted
-    // } = data;
-    console.log("comment", data)
     const [username, setUsername] = React.useState("")
     const owner_id = data.data.owner_id
     const is_deleted = data.data.is_deleted
 
     const getUsername = async () => {
-        console.log(owner_id)
         const response = await axios.get(backend + "/api/user/" + owner_id, {
             headers: {
             'Authorization': `Bearer ${token}`

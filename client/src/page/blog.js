@@ -11,7 +11,8 @@ import backend from "../ip";
 
 const Blog = (blog1) => {
   const token = sessionStorage.getItem("token");
-  const myBlog = blog1.location.state; 
+  const myBlog = blog1.location.state;
+  console.log("myBlog",myBlog) 
   const [commentData, setCommentData] = useState([]);
   const [blogData, setBlogData] = useState('')
   const history = useHistory();
@@ -40,6 +41,7 @@ const Blog = (blog1) => {
                 }
           });
           const { success, data } = response.data;
+          console.log("postpost", response.data.data.owner_id)
           if (response.data) {
             setBlogData(response.data.data);
             console.log(blogData)
