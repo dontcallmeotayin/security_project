@@ -40,8 +40,8 @@ const MyEditModal = (data) => {
 
   const token = sessionStorage.getItem("token");
   const id = sessionStorage.getItem("id");
-  const blog_id = data._id.data;
-  console.log(blog_id);
+  // const blog_id = data._id.data;
+  // console.log(blog_id);
   // const history = useHistory();
   const [content, setContent] = useState('');
 
@@ -53,19 +53,19 @@ const MyEditModal = (data) => {
     setOpen(false);
   };
 
-  const handleUpdate = () => {
-    const data = {content: content, owner_id: id}
-    axios.put(backend + "/api/blog/update/" + blog_id, {
-      data,
-    },
-    {
-      headers: {
-      'Authorization': `Bearer ${token}`
-      }
-    })
-    .then(window.location.reload(false));
-    console.log("updated")
-  }
+  // const handleUpdate = () => {
+  //   const data = {content: content, owner_id: id}
+  //   axios.put(backend + "/api/blog/update/" + blog_id, {
+  //     data,
+  //   },
+  //   {
+  //     headers: {
+  //     'Authorization': `Bearer ${token}`
+  //     }
+  //   })
+  //   .then(window.location.reload(false));
+  //   console.log("updated")
+  // }
 
   return (
     <div>
@@ -84,7 +84,7 @@ const MyEditModal = (data) => {
           multiline
           fullWidth
           rows={8}
-          defaultValue={data.data.content}
+          defaultValue={content}
           value = {content}
           variant="outlined"
           inputProps={{style: {fontFamily: 'Prompt'}}} // font size of input text
@@ -93,7 +93,7 @@ const MyEditModal = (data) => {
         />
           <div style = {{display:"flex", justifyContent:"center", alignItems:"center", marginTop: "32px"}}>
               <MyOutlinedButton style = {{marginRight: "64px"}} onClick={handleClose}> Cancel </MyOutlinedButton>
-              <MyButton onClick={handleUpdate}> OK </MyButton>
+              <MyButton> OK </MyButton>
           </div>
         </div>
       </Modal>

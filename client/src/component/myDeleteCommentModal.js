@@ -35,11 +35,15 @@ const MyDeleteCommentModal = (data) => {
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
-
-  const token = sessionStorage.getItem("token");
+  const [token, setToken] = React.useState('');
+  const user_token = sessionStorage.getItem("token");
+  console.log("comment_modal_data", data)
+  console.log("token", token)
+  console.log("user_token", user_token)
   const comment_id = data.data;
 
   const handleOpen = () => {
+    setToken(user_token);
     setOpen(true);
   };
 
@@ -49,18 +53,21 @@ const MyDeleteCommentModal = (data) => {
 
   const handleDelete = () => {
     console.log("prepare to delete ...");
-    axios.put(backend + "/api/comment/delete/" + comment_id, {
+    console.log(comment_id)
+    console.log("tk_delete",token)
+    const tk = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjVmYjBlOTgyMWMxMmZkMTNhNWE0NWNlMyIsInVzZXJuYW1lIjoidXNlcm5hbWUyIiwicGFzc3dvcmQiOiIkMmIkMTAkU3NHUGpqODZyZTIuVjQzaTB5NnBLdTRINWV2U1dwbnhjamlsWFFhc21GQ1R4UTNUeDQ2N2EiLCJ0eXBlIjoidXNlciIsIl9fdiI6MH0sImlhdCI6MTYwNTU4MTUyMywiZXhwIjoxNjA1NTg1MTIzfQ.W47lRMlLZGs_NFf4jwrhMgo9M1Inkip-eFzx497sUtw';
+    axios.patch(backend + "/api/comment/delete/" + comment_id, {
       headers: {
       'Authorization': `Bearer ${token}`
       }
     })
-    window.location.reload(false);
-    console.log("deleted");
+    // .then(window.location.reload(false));
+    .then(console.log("deleted", token));
+    // console.log("deleted");
   }
 
   return (
     <div>
-        {/* {console.log(comment_id)} */}
       <IconButton color="secondary" style = {{backgroundColor: "#F68E5F"}} onClick={handleOpen}>
           <DeleteIcon />
         </IconButton>
@@ -78,7 +85,8 @@ const MyDeleteCommentModal = (data) => {
                 style = {{marginRight: "64px"}} 
                 onClick={handleClose}
               > Cancel </MyOutlinedButton>
-              <MyButton onClick={handleDelete}> OK </MyButton>
+              <MyButton onClick={() => {handleDelete();}}
+              > OK </MyButton>
           </div>
         </div>
       </Modal>
