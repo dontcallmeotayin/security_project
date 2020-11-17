@@ -131,9 +131,9 @@ const PostBoxInAllPost = ({history, data}) => {
 
 const PostBox = (data) => {
     const [username, setUsername] = React.useState("")
-    const owner_id = data.owner_id
+    const owner = data.data.owner_id
     const getUsername = async () => {
-        const response = await axios.get(backend + "/api/user/" + owner_id, {
+        const response = await axios.get(backend + "/api/user/" + owner, {
             headers: {
             'Authorization': `Bearer ${token}`
             }
@@ -143,7 +143,6 @@ const PostBox = (data) => {
             setUsername(data.username)
         }
     };
-
 
     useEffect(() => {
         getUsername();
@@ -158,7 +157,7 @@ const PostBox = (data) => {
                         <div style = {{fontSize:"12px", color: "#BDBDBD"}}> {moment(data.data.timestamp).format('lll')} </div>
                     </div>
                 </div>
-                {(type === "moderator" || owner_id == id ) &&(
+                {(type === "moderator" || owner == id ) &&(
                     <div style={{display: "flex", flexDirection: "row"}}>
                         <MyEditModal 
                         data ={data.data}/>
@@ -170,7 +169,6 @@ const PostBox = (data) => {
                 <div style = {{width: "1036px", paddingLeft:"32px", paddingRight:"32px", paddingBottom: "32px", wordWrap:"break-word"}}> 
                 {data.data.content}
                 </div>   
-
         </div>
     );
 };
