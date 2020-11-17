@@ -71,7 +71,7 @@ const Blog = (blog1) => {
                       data={blogData}
                       />
                     <CommentBoxInput 
-                      data = {blogData}/>
+                      data = {myBlog}/>
                 </div>
             </div>
         )
@@ -89,7 +89,7 @@ const Blog = (blog1) => {
                 </div>
                 <div style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
                     <PostBox 
-                      data={myBlog}
+                      data={blogData}
                       />
                   {commentData.map((item, i) => 
                       <CommentBox
