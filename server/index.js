@@ -37,11 +37,11 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 
 
-app.get('/', (req, res) => {
+// app.get('/', (req, res) => {
 
-    res.send('Hello World!')
+//     res.send('Hello World!')
 
-})
+// })
 
 https.createServer({
     key: fs.readFileSync('../.cert/key.pem'),
