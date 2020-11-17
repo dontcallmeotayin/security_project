@@ -3,14 +3,32 @@ import React, { useEffect, useState } from 'react';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import { MyButton } from "../component/myButton";
-import { MyLink } from "../component/myLink";
 import {MyEditModal} from "../component/myEditModal";
 import {MyDeleteModal} from "../component/myDeleteModal";
 import moment from "moment";
 import axios from "axios";
 import backend from "../ip";
+import { Link } from 'react-router-dom'
+
+const token = sessionStorage.getItem("token");
+const id = sessionStorage.getItem("id");
+const user_name = sessionStorage.getItem("user_name");
 
 const PostBoxInput = () => {
+    const [content, setContent] = useState("");
+    const handleAddPost = () => {
+        const data = {content: content, owner_id: id}
+        axios
+            .post(backend + "/api/blog", {
+              data,  
+            },
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                  }
+            })
+            .then(window.location.reload(false));
+      };
     return (
         <Paper
         square
@@ -27,7 +45,7 @@ const PostBoxInput = () => {
         }}
         >
             <div style = {{display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", padding: "32px"}}>
-                <div> somchai_jaidee </div>
+                <div> {user_name} </div>
                 <div>
                 <TextField
                     id="standard-multiline-flexible"
@@ -36,24 +54,29 @@ const PostBoxInput = () => {
                     rowsMax={4}
                     inputProps={{style: {fontFamily: 'Prompt'}}} // font size of input text
                     InputLabelProps={{style: {fontFamily: 'Prompt'}}} // font size of input label
+                    value = {content}
+                    onChange={(e) => {
+                        setContent(e.target.value);
+                      }}
                     style={{width:"600px"}}
                 />
                 </div>
                 <div>
-                <MyButton> Post </MyButton>
+                <MyButton onClick={handleAddPost}> Post </MyButton>
                 </div>
             </div>
         </Paper>
     );
 };
 
-const PostBoxInAllPost = ({history, data, token}) => {
+const PostBoxInAllPost = ({history, data}) => {
     const {
         owner_id,
         blog_id,
         content, 
         timestamp,
-        is_deleted
+        is_deleted,
+        fetchData
     } = data;
     const [username, setUsername] = React.useState("")
 
@@ -64,7 +87,6 @@ const PostBoxInAllPost = ({history, data, token}) => {
             }
     });
         const { success, data } = response.data;
-        console.log(data.username)
         if (success) {
             setUsername(data.username)
         }
@@ -80,7 +102,6 @@ const PostBoxInAllPost = ({history, data, token}) => {
             {!is_deleted && (
                 <div style = {{display: "flex",border: "2px solid #F68E5F", borderRadius: "10px", width:"1100px", justifyContent: "space-between", alignItems: "center", marginBottom: '24px'}}>
                     <div style = {{display: "flex", flexDirection:"column", padding: "36px"}}>
-                    {console.log(data)}
                         <div style = {{display: "flex", flexDirection:"column"}}>
                             <div style = {{marginBottom:"4px"}}> {username} </div>
                             <div style = {{marginBottom:"16px", fontSize:"12px", color: "#BDBDBD"}}> {moment(timestamp).format('lll')} </div>
@@ -89,11 +110,16 @@ const PostBoxInAllPost = ({history, data, token}) => {
                             <div style = {{textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap", width:"1036px"}}> 
                                 {content}
                             </div>
-                            <MyLink
-                                // onClick={() => history.push("/blog", {data: data.blog_id})}
-                                goto={"/blog"}
-                                data = {data.blog_id}
-                            > read more </MyLink>
+                            <Link
+                                underline="always"
+                                style = {{
+                                    cursor:"pointer",
+                                    color:"#F68E5F",
+                                }}
+                                to = {{pathname: `/blog/${data._id}`,
+                                        state: data}}
+                            > Read more
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -102,16 +128,10 @@ const PostBoxInAllPost = ({history, data, token}) => {
     );
 };
 
-const PostBox = (history, data, token) => {
-    const {
-        owner_id,
-        blog_id,
-        content, 
-        timestamp,
-        is_deleted
-    } = data;
+const PostBox = (data) => {
     const [username, setUsername] = React.useState("")
-
+    const owner_id = data.data.owner_id
+    {console.log("id",data.data._id)}
     const getUsername = async () => {
         const response = await axios.get(backend + "/api/user/" + owner_id, {
             headers: {
@@ -119,7 +139,6 @@ const PostBox = (history, data, token) => {
             }
     });
         const { success, data } = response.data;
-        console.log(data.username)
         if (success) {
             setUsername(data.username)
         }
@@ -136,16 +155,18 @@ const PostBox = (history, data, token) => {
                 <div style = {{display: "flex", flexDirection:"column"}}>
                     <div style = {{display: "flex", flexDirection:"column"}}>
                         <div style = {{marginBottom:"4px"}}> {username} </div>
-                        <div style = {{fontSize:"12px", color: "#BDBDBD"}}> {moment(timestamp).format('lll')} </div>
+                        <div style = {{fontSize:"12px", color: "#BDBDBD"}}> {moment(data.data.timestamp).format('lll')} </div>
                     </div>
                 </div>
                 <div style={{display: "flex", flexDirection: "row"}}>
-                    <MyEditModal />
-                    <MyDeleteModal />
+                    <MyEditModal 
+                    data ={data.data}/>
+                    <MyDeleteModal
+                    data ={data.data._id} />
                 </div>
             </div>
-                <div style = {{width: "1036px", paddingLeft:"32px", paddingRight:"32px", paddingBottom: "32px"}}> 
-                    {content}
+                <div style = {{width: "1036px", paddingLeft:"32px", paddingRight:"32px", paddingBottom: "32px", wordWrap:"break-word"}}> 
+                {data.data.content}
                 </div>   
 
         </div>

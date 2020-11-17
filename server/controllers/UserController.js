@@ -3,14 +3,13 @@ const jwt = require('jsonwebtoken')
       passport = require('passport')
       bcrypt = require('bcrypt')
 
-
 login = async (req,res,next) => {
     passport.authenticate('local', {session: false}, (err, user, info) => {
         if (err) return next(err)
         if (user) {            
             const token = jwt.sign({user}, 'your_jwt_secret',{expiresIn: '60m'})
-            const {id,username}=user
-            return res.json({id,username,token})
+            const {id,username,type}=user
+            return res.json({id,username,type,token})
         } else {
             return res.status(422).json(info)
          }

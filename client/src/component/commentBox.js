@@ -4,14 +4,32 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import { MyButton } from "../component/myButton";
 import {MyEditModal} from "../component/myEditModal";
-import { MyDeleteModal } from './myDeleteModal';
+import { MyDeleteCommentModal } from './myDeleteCommentModal';
 import moment from "moment";
 import axios from "axios";
 import backend from "../ip";
 
-// import moment from "moment";
+const token = sessionStorage.getItem("token");
+const id = sessionStorage.getItem("id");
+const user_name = sessionStorage.getItem("user_name");
 
-const CommentBoxInput = () => {
+const CommentBoxInput = (info) => {
+    const [content, setContent] = useState("")
+    const handleAddComment = () => {
+        const data = {comment: content, owner_id: id, blog_id: info.data._id}
+        axios
+            .post(backend + "/api/comment", {
+              data
+            },
+            {
+              headers: {
+                'Authorization': `Bearer ${token}`,
+              }
+            })
+            .then(window.location.reload(false));
+            console.log("new comment ja!")
+      };
+    
     return (
         <Paper
         square
@@ -28,7 +46,7 @@ const CommentBoxInput = () => {
         }}
         >
             <div style = {{display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", padding: "32px"}}>
-                <div> somchai_jaidee </div>
+                <div> {user_name} </div>
                 <div>
                 <TextField
                     id="standard-multiline-flexible"
@@ -37,37 +55,43 @@ const CommentBoxInput = () => {
                     rowsMax={4}
                     inputProps={{style: {fontFamily: 'Prompt'}}} // font size of input text
                     InputLabelProps={{style: {fontFamily: 'Prompt'}}} // font size of input label
+                    value = {content}
+                    onChange={(e) => {
+                        setContent(e.target.value);
+                      }}
                     style={{width:"600px"}}
                 />
                 </div>
                 <div>
-                <MyButton> Comment </MyButton>
+                <MyButton onClick={handleAddComment}> Comment </MyButton>
                 </div>
             </div>
         </Paper>
     );
 };
 
-const CommentBox = ({history, data, token}) => {
-    const {
-        owner_id,
-        blog_id,
-        comment_id,
-        text, 
-        timestamp,
-        is_deleted
-    } = data;
-
+const CommentBox = (data) => {
+    // const {
+    //     owner_id,
+    //     blog_id,
+    //     // comment_id,
+    //     text, 
+    //     timestamp,
+    //     is_deleted
+    // } = data;
+    console.log("comment", data)
     const [username, setUsername] = React.useState("")
+    const owner_id = data.data.owner_id
+    const is_deleted = data.data.is_deleted
 
     const getUsername = async () => {
         const response = await axios.get(backend + "/api/user/" + owner_id, {
             headers: {
             'Authorization': `Bearer ${token}`
+            
             }
     });
         const { success, data } = response.data;
-        console.log(data.username)
         if (success) {
             setUsername(data.username)
         }
@@ -85,15 +109,16 @@ const CommentBox = ({history, data, token}) => {
                         <div style = {{display: "flex", flexDirection:"column"}}>
                             <div style = {{display: "flex", flexDirection:"column"}}>
                                 <div style = {{marginBottom:"4px"}}> {username} </div>
-                                <div style = {{fontSize:"12px", color: "#BDBDBD"}}> {moment(timestamp).format('lll')} </div>
+                                <div style = {{fontSize:"12px", color: "#BDBDBD"}}> {moment(data.data.timestamp).format('lll')} </div>
                             </div>
                         </div>
                         <div style={{display: "flex", flexDirection: "row"}}>
                             <MyEditModal />
-                            <MyDeleteModal />
+                            <MyDeleteCommentModal
+                            data ={data.data._id} />
                         </div>
                     </div>
-                        <div style = {{width: "936px", paddingLeft:"32px", paddingRight:"32px", paddingBottom: "32px"}}> {text} </div>
+                        <div style = {{width: "936px", paddingLeft:"32px", paddingRight:"32px", paddingBottom: "32px"}}> {data.data.comment} </div>
                 </div>
             )}
         </div>

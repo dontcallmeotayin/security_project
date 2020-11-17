@@ -40,36 +40,22 @@ const useStyles = makeStyles({
   });
 
 const App = () => {
-// const [username, setUsername] = React.useState("");
-// const getUsername = async () => {
-//   const response = await axios.get(backend + "/api/user/"+ {}, {
-//       headers: {
-//       'Authorization': `Bearer ${token}`
-//       }
-// });
-//   const { success, data } = response.data;
-//   console.log(data.username)
-//   if (success) {
-//       setUsername(data.username)
-//   }
-// };
-
-const classes = useStyles();
-  return (
-    <ThemeProvider theme={theme}>
-      <div className={classes.app}>
-        <Router>
-          <Switch>
-            <Route path="/test" exact component={TestPage} />
-            <Route path="/test2" exact component={TestPage2} />
-            <Route path="/" exact component={Login} />
-            <Route path="/home" exact component={Home} />
-            <Route path="/blog" exact component={Blog} />
-          </Switch>
-        </Router>
-      </div>
-    </ThemeProvider>
-  );
+  const classes = useStyles();
+    return (
+      <ThemeProvider theme={theme}>
+        <div className={classes.app}>
+          <Router>
+            <Switch>
+              <Route path="/test" exact component={TestPage} />
+              <Route path="/test2" exact component={TestPage2} />
+              <Route path="/" exact component={Login} />
+              <Route path="/home" exact component={Home} />
+              <Route path="/blog/:blog_id" exact component={Blog} />
+            </Switch>
+          </Router>
+        </div>
+      </ThemeProvider>
+    );
 };
 
 export default App;
