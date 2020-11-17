@@ -65,6 +65,7 @@ const MyEditModal = (data) => {
       }
     })
     // history.push("/home");
+    .then(window.location.reload(false));
     console.log("updated")
   }
 

@@ -13,6 +13,7 @@ const Blog = (blog1) => {
   const token = sessionStorage.getItem("token");
   const myBlog = blog1.location.state; 
   const [commentData, setCommentData] = useState([]);
+  const [blogData, setBlogData] = useState('')
   const history = useHistory();
 
     const fetchData = async () => {
@@ -30,9 +31,27 @@ const Blog = (blog1) => {
           console.log(e);
         }
       };
+    
+      const fetchBlog = async () => {
+        try {
+          const response = await axios.get(backend + "/api/blog/" + myBlog._id, {
+                headers: {
+                  'Authorization': `Bearer ${token}`
+                }
+          });
+          const { success, data } = response.data;
+          if (response.data) {
+            setBlogData(response.data.data);
+            console.log(blogData)
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      };
 
       useEffect(() => {
         fetchData();
+        fetchBlog();
       },[])
 
       if(commentData == "no comments"){
@@ -49,10 +68,10 @@ const Blog = (blog1) => {
                 </div>
                 <div style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
                     <PostBox 
-                      data={myBlog}
+                      data={blogData}
                       />
                     <CommentBoxInput 
-                      data = {myBlog}/>
+                      data = {blogData}/>
                 </div>
             </div>
         )
