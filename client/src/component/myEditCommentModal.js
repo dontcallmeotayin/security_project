@@ -5,7 +5,6 @@ import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import TextField from '@material-ui/core/TextField';
 import { MyButton, MyOutlinedButton } from "./myButton";
-import {useHistory } from "react-router-dom";
 
 import axios from "axios";
 import backend from "../ip";
@@ -33,20 +32,21 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const MyEditModal = (data) => {
+const MyEditCommentModal = (data) => {
   const classes = useStyles();
-  const history = useHistory();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
 
   const token = sessionStorage.getItem("token");
   const id = sessionStorage.getItem("id");
-  const blog_id = data.data._id;
+  console.log("edit comment:", data.data)
+  console.log("edit comment id:", data.data._id)
   const [content, setContent] = useState('');
+  const comment_id = data.data._id;
   const handleOpen = () => {
     setOpen(true);
-    setContent(data.data.content);
+    setContent(data.data.comment);
   };
 
   const handleClose = () => {
@@ -54,9 +54,8 @@ const MyEditModal = (data) => {
   };
 
   const handleUpdate = () => {
-    const data = {content: content, owner_id: id}
-    console.log("edit data", data);
-    axios.put(backend + "/api/blog/update/" + blog_id, {
+    const data = {comment: content}
+    axios.put(backend + "/api/comment/update/" + comment_id, {
       data,
     },
     {
@@ -64,8 +63,7 @@ const MyEditModal = (data) => {
       'Authorization': `Bearer ${token}`
       }
     })
-    history.push("/home");
-    window.location.reload()
+    .then(window.location.reload(false));
     console.log("updated")
   }
 
@@ -102,4 +100,4 @@ const MyEditModal = (data) => {
     </div>
   );
 }
-export  {MyEditModal}
+export  {MyEditCommentModal}

@@ -13,6 +13,9 @@ import { Link } from 'react-router-dom'
 const token = sessionStorage.getItem("token");
 const id = sessionStorage.getItem("id");
 const user_name = sessionStorage.getItem("user_name");
+const type = sessionStorage.getItem("type");
+
+console.log("pampam", type)
 
 const PostBoxInput = () => {
     const [content, setContent] = useState("");
@@ -158,12 +161,14 @@ const PostBox = (data) => {
                         <div style = {{fontSize:"12px", color: "#BDBDBD"}}> {moment(data.data.timestamp).format('lll')} </div>
                     </div>
                 </div>
-                <div style={{display: "flex", flexDirection: "row"}}>
-                    <MyEditModal 
-                    data ={data.data}/>
-                    <MyDeleteModal
-                    data ={data.data._id} />
-                </div>
+                {(type === "moderator" || owner_id == id ) &&(
+                    <div style={{display: "flex", flexDirection: "row"}}>
+                        <MyEditModal 
+                        data ={data.data}/>
+                        <MyDeleteModal
+                        data ={data.data._id} />
+                    </div>
+                )}
             </div>
                 <div style = {{width: "1036px", paddingLeft:"32px", paddingRight:"32px", paddingBottom: "32px", wordWrap:"break-word"}}> 
                 {data.data.content}

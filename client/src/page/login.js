@@ -20,10 +20,11 @@ const Login = (props) => {
       })
       .then((res) => {
         if (res?.data?.id) {
-          const { id, username, token } = res.data;
+          const { id, username, token, type } = res.data;
           sessionStorage.setItem("token", token);
           sessionStorage.setItem("id", id);
           sessionStorage.setItem("user_name", username);
+          sessionStorage.setItem("type", type);
           history.push("/home");
           history.go(0);
         } else {
