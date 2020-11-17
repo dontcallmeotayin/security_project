@@ -41,7 +41,8 @@ createComment = (req, res) => {
 }
 
 updateComment = async (req, res) => {
-    const body = req.body
+    const body = req.body.data
+    console.log(body)
     if (!body) {
         return res.status(400).json({
             success: false,

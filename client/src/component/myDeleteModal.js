@@ -52,13 +52,13 @@ const MyDeleteModal = (data) => {
   };
 
   const handleDelete = () => {
-    axios.patch(backend + "/api/blog/delete/" + blog_id, {
+    axios.delete(backend + "/api/blog/delete/" + blog_id, {
       headers: {
       'Authorization': `Bearer ${token}`
       }
     })
-    // history.push('/home');
-    // window.location.reload(false);
+    history.push('/home');
+    window.location.reload();
     console.log("deleted")
   }
 

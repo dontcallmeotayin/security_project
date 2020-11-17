@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import { MyButton } from "../component/myButton";
-import {MyEditModal} from "../component/myEditModal";
+import {MyEditCommentModal} from "../component/myEditCommentModal";
 import { MyDeleteCommentModal } from './myDeleteCommentModal';
 import moment from "moment";
 import axios from "axios";
@@ -12,6 +12,7 @@ import backend from "../ip";
 const token = sessionStorage.getItem("token");
 const id = sessionStorage.getItem("id");
 const user_name = sessionStorage.getItem("user_name");
+const type = sessionStorage.getItem("type");
 
 const CommentBoxInput = (info) => {
     const [content, setContent] = useState("")
@@ -26,7 +27,7 @@ const CommentBoxInput = (info) => {
                 'Authorization': `Bearer ${token}`,
               }
             })
-            .then(window.location.reload(false));
+            // .then(window.location.reload(false));
             console.log("new comment ja!")
       };
     
@@ -85,6 +86,7 @@ const CommentBox = (data) => {
     const is_deleted = data.data.is_deleted
 
     const getUsername = async () => {
+        console.log(owner_id)
         const response = await axios.get(backend + "/api/user/" + owner_id, {
             headers: {
             'Authorization': `Bearer ${token}`
@@ -112,11 +114,14 @@ const CommentBox = (data) => {
                                 <div style = {{fontSize:"12px", color: "#BDBDBD"}}> {moment(data.data.timestamp).format('lll')} </div>
                             </div>
                         </div>
-                        <div style={{display: "flex", flexDirection: "row"}}>
-                            <MyEditModal />
-                            <MyDeleteCommentModal
-                            data ={data.data._id} />
-                        </div>
+                        {(type === "moderator" || owner_id == id) &&(
+                            <div style={{display: "flex", flexDirection: "row"}}>
+                                <MyEditCommentModal 
+                                data ={data.data}/>
+                                <MyDeleteCommentModal
+                                data ={data.data._id} />
+                            </div>
+                        )}
                     </div>
                         <div style = {{width: "936px", paddingLeft:"32px", paddingRight:"32px", paddingBottom: "32px"}}> {data.data.comment} </div>
                 </div>

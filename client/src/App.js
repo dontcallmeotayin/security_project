@@ -46,8 +46,6 @@ const App = () => {
         <div className={classes.app}>
           <Router>
             <Switch>
-              <Route path="/test" exact component={TestPage} />
-              <Route path="/test2" exact component={TestPage2} />
               <Route path="/" exact component={Login} />
               <Route path="/home" exact component={Home} />
               <Route path="/blog/:blog_id" exact component={Blog} />
