@@ -59,8 +59,8 @@ updateComment = async (req, res) => {
         newtime = new Date()
         comment.timestamp = newtime
     
-        comment.content = body.content
-
+        comment.comment = body.comment
+        
         comment
             .save()
             .then(() => {
