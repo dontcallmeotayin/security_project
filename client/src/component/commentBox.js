@@ -81,13 +81,14 @@ const CommentBox = (data) => {
     // } = data;
     console.log("comment", data)
     const [username, setUsername] = React.useState("")
-    const owner_id = data.owner_id
-    const is_deleted = data.is_deleted
+    const owner_id = data.data.owner_id
+    const is_deleted = data.data.is_deleted
 
     const getUsername = async () => {
         const response = await axios.get(backend + "/api/user/" + owner_id, {
             headers: {
             'Authorization': `Bearer ${token}`
+            
             }
     });
         const { success, data } = response.data;
@@ -108,16 +109,16 @@ const CommentBox = (data) => {
                         <div style = {{display: "flex", flexDirection:"column"}}>
                             <div style = {{display: "flex", flexDirection:"column"}}>
                                 <div style = {{marginBottom:"4px"}}> {username} </div>
-                                <div style = {{fontSize:"12px", color: "#BDBDBD"}}> {moment(data.timestamp).format('lll')} </div>
+                                <div style = {{fontSize:"12px", color: "#BDBDBD"}}> {moment(data.data.timestamp).format('lll')} </div>
                             </div>
                         </div>
                         <div style={{display: "flex", flexDirection: "row"}}>
                             <MyEditModal />
                             <MyDeleteCommentModal
-                            data ={data._id} />
+                            data ={data.data._id} />
                         </div>
                     </div>
-                        <div style = {{width: "936px", paddingLeft:"32px", paddingRight:"32px", paddingBottom: "32px"}}> {data.comment} </div>
+                        <div style = {{width: "936px", paddingLeft:"32px", paddingRight:"32px", paddingBottom: "32px"}}> {data.data.comment} </div>
                 </div>
             )}
         </div>
